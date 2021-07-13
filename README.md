@@ -1,8 +1,15 @@
 # MyNodeServer
 
+This is a node server to interface with Daikin Mini-Split HVAC systems and make it available to a Universal Devices ISY994i Polyglot interface with Polyglot V3 running on a Polisy
+
 #### Installation
 
-Here is how you install this poly.
+Backup Your ISY!
+
+Go to the Polyglot Store in the UI and install.
+
+From the Polyglot dashboard, select the udi-daikin-poly node server and configure (see configuration options below).
+Restart the Admin Console so that it can properly display the new node server nodes.
 
 #### Requirements
 
