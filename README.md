@@ -1,4 +1,4 @@
-# MyNodeServer
+# Daikin Mini Split
 
 This is a node server to interface with Daikin Mini-Split HVAC systems and make it available to a Universal Devices ISY994i Polyglot interface with Polyglot V3 running on a Polisy
 
