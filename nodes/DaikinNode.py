@@ -15,6 +15,7 @@ class DaikinNode(polyinterface.Node):
         self.ip = ip
         super(DaikinNode, self).__init__(controller, primary, address, name)
 
+# TODO: Integration in fan mode.
     # async def process_fan_mode(self, mode):
     #     try:
     #         LOGGER.debug('process_fan_mode incoming value: ' + str(mode))
@@ -133,17 +134,10 @@ class DaikinNode(polyinterface.Node):
     def start(self):
         self.query()
 
+# FIXME: Seem that shortpoll is not called in the Node object.  Need to investigate.
     def shortPoll(self):
         LOGGER.debug('shortPoll')
         self.query()
-
-    # drivers = [{'driver': 'ST', 'value': 0, 'uom': '17'}, # Current Temp
-    #     {'driver': 'CLISPC', 'value': 0, 'uom': '17'},  # Set Cool Point
-    #     {'driver': 'CLIMD', 'value': 0, 'uom': '67'},  # Current Mode
-    #     {'driver': 'CLIFS', 'value': 0, 'uom': '68'}, # Current Fan Mode
-    #     {'driver': 'GV2', 'value': 0, 'uom': '25'},  # Set Mode
-    #     {'driver': 'GV3', 'value': 10, 'uom': '25'}  # Set Fan State
-    # ]
 
     drivers = [{'driver': 'ST', 'value': 0, 'uom': '17'},  # Current Temp
                {'driver': 'CLISPC', 'value': 0, 'uom': '17'},  # Set Cool Point
@@ -152,11 +146,7 @@ class DaikinNode(polyinterface.Node):
                {'driver': 'GV2', 'value': 0, 'uom': '67'}  # Set Mode
         ]
 
-    # commands = {
-    #     'SET_TEMP': cmd_set_temp,
-    #     'SET_MODE': cmd_set_mode,
-    #     'SET_FAN_MODE': cmd_set_fan_mode
-    # }
+
 
     commands = {
         'SET_TEMP': cmd_set_temp,

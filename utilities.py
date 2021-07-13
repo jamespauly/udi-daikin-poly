@@ -1,5 +1,6 @@
 from datetime import datetime
 
+# TODO: Need to swith these to dictionary lookups
 def to_isy_mode_value(mode):
     if mode is None:
         return 0
