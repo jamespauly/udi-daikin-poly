@@ -25,7 +25,6 @@ CDM-50 = Critical
 
 # Daikin Fan Modes
 IFM-10 = Auto
-IFM-11 = Silent
 IFM-3 = 1
 IFM-4 = 2
 IFM-5 = 3

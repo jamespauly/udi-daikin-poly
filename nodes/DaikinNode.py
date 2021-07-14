@@ -18,16 +18,13 @@ class DaikinNode(polyinterface.Node):
 # TODO: Integration in fan mode.
     async def process_fan_mode(self, mode):
         try:
-            LOGGER.debug('process_fan_mode incoming value: ' + str(mode))
+            LOGGER.debug('Process_fan_mode incoming value: ' + str(mode))
             daikin_control = DaikinInterface(self.ip, False)
             await daikin_control.get_control()
-            control = daikin_control.values
             c_mode = mode
             LOGGER.debug('c_mode: ' + str(mode))
             if c_mode == '10':
                 c_mode = 'A'
-            elif c_mode == '11':
-                c_mode == 'B'
             settings = {'f_rate': c_mode}
             await daikin_control.set(settings)
             self.setDriver("GV3", mode)
@@ -36,7 +33,7 @@ class DaikinNode(polyinterface.Node):
 
     async def process_mode(self, mode):
         try:
-            LOGGER.debug('process_mode incoming value: ' + str(mode))
+            LOGGER.debug('Process_mode incoming value: ' + str(mode))
             daikin_control = DaikinInterface(self.ip, False)
             settings = {}
             if int(mode) == 0:
@@ -54,8 +51,8 @@ class DaikinNode(polyinterface.Node):
             daikin_control = DaikinInterface(self.ip, False)
             await daikin_control.get_control()
             control = daikin_control.values
-            LOGGER.debug('process_temp temp : ' + str(temp))
-            LOGGER.debug('process_temp stemp: ' + str(control['stemp']))
+            LOGGER.debug('Process_temp temp : ' + str(temp))
+            LOGGER.debug('Process_temp stemp: ' + str(control['stemp']))
             if control['stemp'] != 'M':
                 LOGGER.debug('process_temp stemp is numeric: ' + str(control['stemp']))
                 settings = {'stemp': utilities.fahrenheit_to_celsius(temp)}
@@ -78,8 +75,8 @@ class DaikinNode(polyinterface.Node):
             if control['stemp'] != 'M':
                 self.setDriver('CLISPC', utilities.celsius_to_fahrenheit(control['stemp']))
                 LOGGER.debug('Set Temp: ' + str(control['stemp']))
-            LOGGER.debug('process Mode: ' + str(control['mode']))
-            LOGGER.debug('isy process mode: ' + str(utilities.to_isy_mode_value(control['mode'])))
+            LOGGER.debug('Process Mode: ' + str(control['mode']))
+            LOGGER.debug('ISY process mode: ' + str(utilities.to_isy_mode_value(control['mode'])))
             if int(control['pow']) == 1:
                 self.setDriver('CLIMD', utilities.to_isy_mode_value(int(control['mode'])))
             else:
@@ -89,8 +86,6 @@ class DaikinNode(polyinterface.Node):
             c_mode = control['f_rate']
             if c_mode == 'A':
                 c_mode = 10
-            elif c_mode == 'B':
-                c_mode == 11
             LOGGER.debug('c_mode: ' + str(c_mode))
             self.setDriver('GV3', c_mode)
         except Exception as ex:
