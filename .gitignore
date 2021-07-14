@@ -103,7 +103,8 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+/sitenotes
+
 
 # mypy
 .mypy_cache/
@@ -112,3 +113,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Test File
+test-diakin.py

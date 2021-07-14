@@ -4,7 +4,7 @@ ND-controller-ICON = GenericCtl
 CMD-ctl-QUERY-NAME = Query
 CMD-ctl-DISCOVER-NAME = Discover
 CMD-ctl-SET_DM-NAME = Set Logger Level
-ST-ctl-ST-NAME = Target Temperature
+ST-ctl-ST-NAME = Node Server Running
 ST-ctl-GV1-NAME = Logger Level
 
 # Debug/Logger Modes
@@ -24,20 +24,20 @@ CDM-50 = Critical
 #IDM-10 = Off
 
 # Daikin Fan Modes
-#IFM-10 = Auto
-#IFM-11 = Silent
-#IFM-3 = 1
-#IFM-4 = 2
-#IFM-5 = 3
-#IFM-6 = 4
-#IFM-7 = 5
+IFM-10 = Auto
+IFM-11 = Silent
+IFM-3 = 1
+IFM-4 = 2
+IFM-5 = 3
+IFM-6 = 4
+IFM-7 = 5
 
 # daikinnodetype
 ND-daikinnode-NAME = Diakin Node
 ST-daikinnls-ST-NAME = Inside Temperature
 ST-daikinnls-CLISPC-NAME = Target Temperature
 ST-daikinnls-CLIMD-NAME = Mode
-ST-daikinnls-CLIFS-NAME = Fan State
+ST-GV3-NAME = Fan State
 CMD-daikinnls-SET_TEMP-NAME = Set Temperature
 CMD-daikinnls-SET_MODE-NAME = Set Mode
-#CMD-daikinnls-SET_FAN_MODE-NAME = Set Fan Speed
+CMD-daikinnls-SET_FAN_MODE-NAME = Set Fan Speed
