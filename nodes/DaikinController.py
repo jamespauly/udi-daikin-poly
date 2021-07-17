@@ -1,14 +1,4 @@
-
-
-"""
-Get the polyinterface objects we need.  Currently Polyglot Cloud uses
-a different Python module which doesn't have the new LOG_HANDLER functionality
-"""
-
-try:
-    from polyinterface import Controller,LOG_HANDLER,LOGGER
-except ImportError:
-    import pgc_interface as polyinterface
+from udi_interface import Custom,Node,LOG_HANDLER,LOGGER
 import logging
 
 from pydaikin.discovery import Discovery
@@ -18,10 +8,12 @@ from nodes import DaikinNode
 # IF you want a different log format than the current default
 LOG_HANDLER.set_log_format('%(asctime)s %(threadName)-10s %(name)-18s %(levelname)-8s %(module)s:%(funcName)s: %(message)s')
 
-class DaikinController(Controller):
-    def __init__(self, polyglot):
-        super(DaikinController, self).__init__(polyglot)
+class DaikinController(Node):
+    def __init__(self, polyglot, primary, address, name):
+        super(DaikinController, self).__init__(polyglot, primary, address, name)
+        self.poly = polyglot
         self.name = 'Daikin Controller'
+        self.poly.addNode(self)
 
     def start(self):
         serverdata = self.poly.get_server_data(check_profile=True)
@@ -31,33 +23,39 @@ class DaikinController(Controller):
         self.discover()
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
+        self.poly.ready()
 
-    def shortPoll(self):
-        self.query()
-
-    def longPoll(self):
+    def configHandler(self, config):
         pass
+
+    def poll(self, flag):
+        if flag:
+            LOGGER.debug('longPoll (controller)')
+            self.heartbeat()
+        else:
+            self.query()
+            LOGGER.debug('shortPoll (controller)')
 
     def query(self,command=None):
         LOGGER.debug("Query sensor {}".format(self.address))
 
-        for node in self.nodes:
-            if self.nodes[node] is not self:
-                self.nodes[node].query()
-            self.nodes[node].reportDrivers()
+        for node in self.poly.nodes:
+            if self.poly.nodes[node] is not self:
+                self.poly.nodes[node].query()
+            self.poly.nodes[node].reportDrivers()
 
     def discover(self, *args, **kwargs):
         discovery = Discovery()
         devices = discovery.poll(stop_if_found=None, ip=None)
         for device in iter(devices):
             end_ip = device['ip'][device['ip'].rfind('.') + 1:]
-            self.addNode(DaikinNode(self, self.address, end_ip, device['name'], device['ip']))
+            self.poly.addNode(DaikinNode(self.poly, self.address, end_ip, device['name'], device['ip']))
 
     def delete(self):
         LOGGER.info('Deleting Daikin controller node.  Deleting sub-nodes...')
-        for node in self.nodes:
+        for node in self.poly.nodes:
             if node.address != self.address:
-                self.nodes[node].delete()
+                self.poly.nodes[node].delete()
 
     def stop(self):
         LOGGER.debug('Daikin NodeServer stopped.')
@@ -94,7 +92,7 @@ class DaikinController(Controller):
             LOG_HANDLER.set_basic_config(True,logging.WARNING)
 
     def check_params(self):
-        self.removeNoticesAll()
+        self.Notices.clear()
 
     def cmd_set_debug_mode(self,command):
         val = int(command.get('value'))

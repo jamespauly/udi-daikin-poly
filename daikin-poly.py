@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import polyinterface
+import udi_interface
 import sys
 """
 Import the polyglot interface module. This is in pypy so you can just install it
@@ -15,7 +15,7 @@ pip install polyinterface --user
 cleanliness, however that isn't required. I do not condone installing pip
 modules globally. Use the --user flag, not sudo.
 """
-LOGGER = polyinterface.LOGGER
+LOGGER = udi_interface.LOGGER
 """
 polyinterface has a LOGGER that is created by default and logs to:
 logs/debug.log
@@ -27,7 +27,7 @@ from nodes import DaikinController
 
 if __name__ == "__main__":
     try:
-        polyglot = polyinterface.Interface('Daikin')
+        polyglot = udi_interface.Interface([DaikinController])
         """
         Instantiates the Interface to Polyglot.
         The name doesn't really matter unless you are starting it from the
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         """
         Starts MQTT and connects to Polyglot.
         """
-        control = DaikinController(polyglot)
+        control = DaikinController(polyglot, 'controller', 'controller', 'Daikin Controller')
         """
         Creates the Controller Node and passes in the Interface
         """
