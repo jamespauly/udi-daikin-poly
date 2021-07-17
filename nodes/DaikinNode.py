@@ -1,21 +1,17 @@
 import asyncio
 
+import udi_interface
 import utilities
 
-try:
-    import polyinterface
-except ImportError:
-    import pgc_interface as polyinterface
 from DaikinInterface import DaikinInterface
 
-LOGGER = polyinterface.LOGGER
+LOGGER = udi_interface.LOGGER
 
-class DaikinNode(polyinterface.Node):
+class DaikinNode(udi_interface.Node):
     def __init__(self, controller, primary, address, name, ip):
         self.ip = ip
         super(DaikinNode, self).__init__(controller, primary, address, name)
 
-# TODO: Integration in fan mode.
     async def process_fan_mode(self, mode):
         try:
             LOGGER.debug('Process_fan_mode incoming value: ' + str(mode))
