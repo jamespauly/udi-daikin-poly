@@ -4,18 +4,16 @@
 Get the polyinterface objects we need.  Currently Polyglot Cloud uses
 a different Python module which doesn't have the new LOG_HANDLER functionality
 """
-import asyncio
-
-import utilities
 
 try:
     from polyinterface import Controller,LOG_HANDLER,LOGGER
 except ImportError:
     import pgc_interface as polyinterface
 import logging
+
 from pydaikin.discovery import Discovery
+
 from nodes import DaikinNode
-from DaikinInterface import DaikinInterface
 
 # IF you want a different log format than the current default
 LOG_HANDLER.set_log_format('%(asctime)s %(threadName)-10s %(name)-18s %(levelname)-8s %(module)s:%(funcName)s: %(message)s')
@@ -38,17 +36,14 @@ class DaikinController(Controller):
         self.query()
 
     def longPoll(self):
-        self.query()
+        pass
 
     def query(self,command=None):
         LOGGER.debug("Query sensor {}".format(self.address))
-        # for node in self.nodes:
-        #     self.nodes[node].reportDrivers()
 
         for node in self.nodes:
             if self.nodes[node] is not self:
                 self.nodes[node].query()
-
             self.nodes[node].reportDrivers()
 
     def discover(self, *args, **kwargs):

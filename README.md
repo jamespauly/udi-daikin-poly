@@ -1,21 +1,23 @@
 # Daikin Mini Split
 
-This is a node server to interface with Daikin Mini-Split HVAC systems and make it available to a Universal Devices ISY994i Polyglot interface with Polyglot V3 running on a Polisy
+This is a node server to interface with Daikin Mini-Split HVAC systems and make it available to a Universal Devices ISY994i Polyglot interface with Polyglot V2 running on a Polisy
+
+Currently supports Daikin WiFi modules:
+* BRP069Axx/BRP069Bxx/BRP072Axx
 
 #### Installation
 
-Backup Your ISY!
-
-Go to the Polyglot Store in the UI and install.
-
-From the Polyglot dashboard, select the udi-daikin-poly node server and configure (see configuration options below).
-Restart the Admin Console so that it can properly display the new node server nodes.
+1. Backup Your ISY!
+2. Go to the Polyglot Store in the UI and install.
+3. From the Polyglot dashboard, select the udi-daikin-poly node server and configure (see configuration options below).
+3. Restart the Admin Console so that it can properly display the new node server nodes.
 
 #### Requirements
 
-Here is what is required to run this poly.
+Here is what is required to use this poly:<BR>
+[pydaikin](https://pypi.org/project/pydaikin/)
+<BR>https://pypi.org/project/pydaikin/
 
-## Using this Template
+urllib3 - For logging
 
-To use this template as the start of your nodeserver, just hit the + in the upper
-right corner of github select Import Repository and give the path to this repo as the source.
+
