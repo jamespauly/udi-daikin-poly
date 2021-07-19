@@ -41,7 +41,7 @@ class DaikinController(Node):
     def poll(self, flag):
         if flag:
             LOGGER.debug('longPoll (controller)')
-            self.heartbeat()
+            pass
         else:
             self.query()
             LOGGER.debug('shortPoll (controller)')
