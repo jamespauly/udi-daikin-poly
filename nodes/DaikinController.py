@@ -12,8 +12,21 @@ class DaikinController(Node):
     def __init__(self, polyglot, primary, address, name):
         super(DaikinController, self).__init__(polyglot, primary, address, name)
         self.poly = polyglot
-        self.name = 'Daikin Controller'
+        self.name = name
+        self.primary = primary
+        self.address = address
+        self.poly.subscribe(self.poly.START, self.start)
+        self.poly.subscribe(self.poly.POLL, self.poll)
+        self.poly.subscribe(self.poly.CONFIG, self.configHandler)
+        self.poly.subscribe(self.poly.CUSTOMPARAMS, self.parameterHandler)
+        self.poly.ready()
         self.poly.addNode(self)
+
+    def parameterHandler(self, params):
+        pass
+
+    def configHandler(self, config):
+        pass
 
     def start(self):
         serverdata = self.poly.get_server_data(check_profile=True)
@@ -24,9 +37,6 @@ class DaikinController(Node):
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
         self.poly.ready()
-
-    def configHandler(self, config):
-        pass
 
     def poll(self, flag):
         if flag:
@@ -91,16 +101,17 @@ class DaikinController(Node):
             # This is the polyinterface default
             LOG_HANDLER.set_basic_config(True,logging.WARNING)
 
-    def check_params(self):
-        self.Notices.clear()
-
     def cmd_set_debug_mode(self,command):
         val = int(command.get('value'))
         LOGGER.debug("cmd_set_debug_mode: {}".format(val))
         self.set_debug_level(val)
 
+    def remove_notices_all(self, command):
+        self.Notices.clear()
+
     id = 'controller'
     commands = {
+        'REMOVE_NOTICES_ALL': remove_notices_all,
         'QUERY': query,
         'DISCOVER': discover,
         'SET_DM': cmd_set_debug_mode
