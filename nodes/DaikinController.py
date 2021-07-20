@@ -7,6 +7,7 @@ from nodes import DaikinNode
 
 # IF you want a different log format than the current default
 LOG_HANDLER.set_log_format('%(asctime)s %(threadName)-10s %(name)-18s %(levelname)-8s %(module)s:%(funcName)s: %(message)s')
+LOG_HANDLER.set_basic_config(True, logging.DEBUG)
 
 class DaikinController(Node):
     def __init__(self, polyglot, primary, address, name):
@@ -41,13 +42,13 @@ class DaikinController(Node):
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
 
-    def poll(self, flag):
-        if flag:
-            LOGGER.debug('longPoll (controller)')
-            pass
-        else:
-            self.query()
+    def poll(self, pollType):
+        if 'shortPoll' in pollType:
             LOGGER.debug('shortPoll (controller)')
+            self.query()
+        else:
+            LOGGER.debug('longPoll (controller)')
+            self.query()
 
     def query(self,command=None):
         LOGGER.debug("Query sensor {}".format(self.address))
