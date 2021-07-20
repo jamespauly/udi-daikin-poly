@@ -36,7 +36,6 @@ class DaikinController(Node):
         self.discover()
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
-        self.poly.ready()
 
     def poll(self, flag):
         if flag:
