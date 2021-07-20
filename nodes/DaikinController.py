@@ -78,12 +78,14 @@ class DaikinController(Node):
         logging.getLogger('urllib3').setLevel(level)
 
     def set_debug_level(self,level):
-        LOGGER.debug('set_debug_level: {}'.format(level))
+        LOGGER.info('set_debug_level: {}'.format(level))
         if level is None:
             level = 30
         level = int(level)
         if level == 0:
             level = 30
+
+        level = 10
         LOGGER.info('set_debug_level: Set GV1 to {}'.format(level))
         self.setDriver('GV1', level)
         # 0=All 10=Debug are the same because 0 (NOTSET) doesn't show everything.
@@ -122,5 +124,5 @@ class DaikinController(Node):
     }
     drivers = [
         {'driver': 'ST', 'value': 1, 'uom': 2},
-        {'driver': 'GV1', 'value': 10, 'uom': 25} # Debug (Log) Mode, default=30=Warning
+        {'driver': 'GV1', 'value': 10, 'uom': 25} # Debug (Log) Mode, default=10=Debug
     ]
