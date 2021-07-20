@@ -18,8 +18,8 @@ class DaikinController(udi_interface.Node):
         self.name = name
         self.primary = primary
         self.address = address
-        self.poly.subscribe(self.poly.START, self.start)
-        self.poly.subscribe(self.poly.POLL, self.poll)
+        self.poly.subscribe(self.poly.START, self.start, address)
+        self.poly.subscribe(self.poly.POLL, self.poll, address)
         #self.poly.subscribe(self.poly.CONFIG, self.configHandler)
         #self.poly.subscribe(self.poly.CUSTOMPARAMS, self.parameterHandler)
         self.poly.ready()
