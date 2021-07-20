@@ -10,7 +10,6 @@
   "shortPoll": "200",
   "longPoll": "900",
   "profile_version": "2.0.0",
-  "devMode": true,
   "credits": [
     {
       "title": "Daikin: A Node Server for Controlling Diakin Mini-Splits",
