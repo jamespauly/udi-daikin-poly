@@ -32,7 +32,6 @@ class DaikinController(Node):
         serverdata = self.poly.get_server_data(check_profile=True)
         LOGGER.info('Started udi-daikin-poly NodeServer {}'.format(serverdata['version']))
 
-        self.check_params()
         self.discover()
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
