@@ -1,6 +1,6 @@
 from udi_interface import Custom,Node,LOG_HANDLER,LOGGER
 import logging
-
+import time
 from pydaikin.discovery import Discovery
 
 from nodes import DaikinNode
@@ -29,9 +29,17 @@ class DaikinController(Node):
         pass
 
     def start(self):
-        serverdata = self.poly.get_server_data(check_profile=True)
-        LOGGER.info('Started udi-daikin-poly NodeServer {}'.format(serverdata['version']))
+        #serverdata = self.poly.get_server_data(check_profile=True)
+        #LOGGER.info('Started udi-daikin-poly NodeServer {}'.format(serverdata['version']))
+        LOGGER.info('Started udi-daikin-poly NodeServer')
 
+        self.poly.updateProfile()
+        self.poly.setCustomParamsDoc()
+
+        while not self.configured:
+            time.sleep(10)
+
+        LOGGER.critical('Calling Discovery from start')
         self.discover()
         self.setDriver('ST', 1)
         self.set_debug_level(self.getDriver('GV1'))
@@ -57,6 +65,7 @@ class DaikinController(Node):
         devices = discovery.poll(stop_if_found=None, ip=None)
         for device in iter(devices):
             end_ip = device['ip'][device['ip'].rfind('.') + 1:]
+            LOGGER.debug("Adding Node {}".format(end_ip))
             self.poly.addNode(DaikinNode(self.poly, self.address, end_ip, device['name'], device['ip']))
 
     def delete(self):
