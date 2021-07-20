@@ -17,16 +17,16 @@ class DaikinController(Node):
         self.address = address
         self.poly.subscribe(self.poly.START, self.start)
         self.poly.subscribe(self.poly.POLL, self.poll)
-        self.poly.subscribe(self.poly.CONFIG, self.configHandler)
-        self.poly.subscribe(self.poly.CUSTOMPARAMS, self.parameterHandler)
+        #self.poly.subscribe(self.poly.CONFIG, self.configHandler)
+        #self.poly.subscribe(self.poly.CUSTOMPARAMS, self.parameterHandler)
         self.poly.ready()
         self.poly.addNode(self)
 
-    def parameterHandler(self, params):
-        pass
-
-    def configHandler(self, config):
-        pass
+    # def parameterHandler(self, params):
+    #     pass
+    #
+    # def configHandler(self, config):
+    #     pass
 
     def start(self):
         #serverdata = self.poly.get_server_data(check_profile=True)
@@ -35,9 +35,6 @@ class DaikinController(Node):
 
         self.poly.updateProfile()
         self.poly.setCustomParamsDoc()
-
-        while not self.configured:
-            time.sleep(10)
 
         LOGGER.critical('Calling Discovery from start')
         self.discover()
