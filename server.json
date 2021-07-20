@@ -1,5 +1,5 @@
 {
-  "name": "Daikin Controller",
+  "name": "Daikin",
   "docs": "https://github.com/jamespauly/udi-daikin-poly",
   "type": "python3",
   "executable": "daikin-poly.py",
