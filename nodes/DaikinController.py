@@ -1,4 +1,4 @@
-from udi_interface import Custom,Node,LOG_HANDLER,LOGGER
+import udi_interface
 import logging
 import time
 from pydaikin.discovery import Discovery
@@ -6,10 +6,12 @@ from pydaikin.discovery import Discovery
 from nodes import DaikinNode
 
 # IF you want a different log format than the current default
+LOGGER = udi_interface.LOGGER
+LOG_HANDLER = udi_interface.LOG_HANDLER
 LOG_HANDLER.set_log_format('%(asctime)s %(threadName)-10s %(name)-18s %(levelname)-8s %(module)s:%(funcName)s: %(message)s')
 LOG_HANDLER.set_basic_config(True, logging.DEBUG)
 
-class DaikinController(Node):
+class DaikinController(udi_interface.Node):
     def __init__(self, polyglot, primary, address, name):
         super(DaikinController, self).__init__(polyglot, primary, address, name)
         self.poly = polyglot
@@ -102,7 +104,7 @@ class DaikinController(Node):
             LOGGER.setLevel(logging.CRITICAL)
         else:
             LOGGER.debug("set_debug_level: Unknown level {}".format(level))
-        if level < 10:
+        if level <= 10:
             LOG_HANDLER.set_basic_config(True,logging.DEBUG)
         else:
             # This is the polyinterface default
