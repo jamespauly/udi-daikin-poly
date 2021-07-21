@@ -116,11 +116,6 @@ class DaikinNode(udi_interface.Node):
             LOGGER.debug("longPoll (%s)", self.address)
             pass
 
-    # FIXME: Seem that shortpoll is not called in the Node object.  Need to investigate.
-    def shortPoll(self):
-        LOGGER.debug('shortPoll')
-        self.query()
-
     drivers = [{'driver': 'ST', 'value': 0, 'uom': '17'},  # Current Temp
                {'driver': 'CLISPC', 'value': 0, 'uom': '17'},  # Set Cool Point
                {'driver': 'CLIMD', 'value': 0, 'uom': '67'},  # Current Mode
