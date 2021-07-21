@@ -7,11 +7,14 @@ from DaikinInterface import DaikinInterface
 
 LOGGER = udi_interface.LOGGER
 
+
 class DaikinNode(udi_interface.Node):
     def __init__(self, polyglot, primary, address, name, ip):
         self.ip = ip
+        self.address = address
         super(DaikinNode, self).__init__(polyglot, primary, address, name)
         self.poly.subscribe(self.poly.START, self.start, address)
+        self.poly.subscribe(self.poly.POLL, self.poll, address)
 
     async def process_fan_mode(self, mode):
         try:
@@ -105,7 +108,15 @@ class DaikinNode(udi_interface.Node):
     def start(self):
         self.query()
 
-# FIXME: Seem that shortpoll is not called in the Node object.  Need to investigate.
+    def poll(self, pollType):
+        if 'shortPoll' in pollType:
+            LOGGER.debug("shortPoll (%s)", self.address)
+            self.query()
+        else:
+            LOGGER.debug("longPoll (%s)", self.address)
+            pass
+
+    # FIXME: Seem that shortpoll is not called in the Node object.  Need to investigate.
     def shortPoll(self):
         LOGGER.debug('shortPoll')
         self.query()
@@ -114,7 +125,7 @@ class DaikinNode(udi_interface.Node):
                {'driver': 'CLISPC', 'value': 0, 'uom': '17'},  # Set Cool Point
                {'driver': 'CLIMD', 'value': 0, 'uom': '67'},  # Current Mode
                {'driver': 'GV3', 'value': 0, 'uom': '25'}  # Set Fan Mode
-        ]
+               ]
 
     commands = {
         'SET_TEMP': cmd_set_temp,
