@@ -90,7 +90,6 @@ class DaikinController(udi_interface.Node):
         if level == 0:
             level = 30
 
-        level = 10
         LOGGER.info('set_debug_level: Set GV1 to {}'.format(level))
         self.setDriver('GV1', level)
         # 0=All 10=Debug are the same because 0 (NOTSET) doesn't show everything.

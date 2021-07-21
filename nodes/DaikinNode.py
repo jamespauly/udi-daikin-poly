@@ -8,9 +8,10 @@ from DaikinInterface import DaikinInterface
 LOGGER = udi_interface.LOGGER
 
 class DaikinNode(udi_interface.Node):
-    def __init__(self, controller, primary, address, name, ip):
+    def __init__(self, polyglot, primary, address, name, ip):
         self.ip = ip
-        super(DaikinNode, self).__init__(controller, primary, address, name)
+        super(DaikinNode, self).__init__(polyglot, primary, address, name)
+        self.poly.subscribe(self.poly.START, self.start, address)
 
     async def process_fan_mode(self, mode):
         try:
