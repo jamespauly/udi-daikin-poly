@@ -27,14 +27,14 @@ class DaikinController(udi_interface.Node):
 
     def poll(self, pollType):
         if 'shortPoll' in pollType:
-            LOGGER.debug('shortPoll (controller)')
+            LOGGER.info('shortPoll (controller)')
             pass
         else:
-            LOGGER.debug('longPoll (controller)')
+            LOGGER.info('longPoll (controller)')
             self.query()
 
     def query(self,command=None):
-        LOGGER.debug("Query sensor {}".format(self.address))
+        LOGGER.info("Query sensor {}".format(self.address))
 
         for node in self.poly.nodes:
             if self.poly.nodes[node] is not self:
@@ -58,7 +58,7 @@ class DaikinController(udi_interface.Node):
                 self.poly.nodes[node].delete()
 
     def stop(self):
-        LOGGER.debug('Daikin NodeServer stopped.')
+        LOGGER.info('Daikin NodeServer stopped.')
 
     def set_module_logs(self,level):
         logging.getLogger('urllib3').setLevel(level)
