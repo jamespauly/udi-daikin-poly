@@ -9,6 +9,7 @@
   "notice": "",
   "shortPoll": "15",
   "longPoll": "600",
+  "devMode": true,
   "profile_version": "2.0.0",
   "credits": [
     {
