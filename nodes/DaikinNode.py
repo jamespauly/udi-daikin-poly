@@ -13,7 +13,7 @@ class DaikinNode(udi_interface.Node):
         self.address = address
         super(DaikinNode, self).__init__(polyglot, primary, address, name)
         self.poly.subscribe(self.poly.START, self.start, address)
-        self.poly.subscribe(self.poly.POLL, self.poll, address)
+        self.poly.subscribe(self.poly.POLL, self.poll)
 
     async def process_fan_mode(self, mode):
         try:
