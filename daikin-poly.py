@@ -1,29 +1,20 @@
-#!/usr/bin/env python3
-"""
-Polyglot v3 node server Daikin Interface
-Copyright (C) 2021 James Paul
-"""
-import udi_interface
+#!/usr/bin/env python
+import polyinterface
 import sys
 
-LOGGER = udi_interface.LOGGER
-LOG_HANDLER = udi_interface.LOG_HANDLER;
+LOGGER = polyinterface.LOGGER
 
 from nodes import DaikinController
-from nodes import DaikinNode
-
-import logging
 
 if __name__ == "__main__":
     try:
-        LOG_HANDLER.set_basic_config(True, logging.DEBUG)
-        polyglot = udi_interface.Interface([DaikinController, DaikinNode])
+        polyglot = polyinterface.Interface('Daikin')
         polyglot.start()
-        control = DaikinController(polyglot, 'controller', 'controller', 'Daikin Controller')
-        polyglot.runForever()
+        control = DaikinController(polyglot)
+        control.runForever()
     except (KeyboardInterrupt, SystemExit):
+        LOGGER.warning("Received interrupt or exit...")
         polyglot.stop()
-        sys.exit(0)
     except Exception as err:
         LOGGER.error('Excption: {0}'.format(err), exc_info=True)
-        sys.exit(0)
+    sys.exit(0)

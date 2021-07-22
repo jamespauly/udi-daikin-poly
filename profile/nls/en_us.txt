@@ -3,7 +3,6 @@ ND-controller-NAME = NodeServer Online
 ND-controller-ICON = GenericCtl
 CMD-ctl-QUERY-NAME = Query
 CMD-ctl-DISCOVER-NAME = Discover
-CMD-ctl-REMOVE_NOTICES_ALL-NAME = Remove Notices
 CMD-ctl-SET_DM-NAME = Set Logger Level
 ST-ctl-ST-NAME = Node Server Running
 ST-ctl-GV1-NAME = Logger Level
