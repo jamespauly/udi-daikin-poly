@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import polyinterface
+try:
+    import polyinterface
+except ImportError:
+    import pgc_interface as polyinterface
 import sys
 
 LOGGER = polyinterface.LOGGER
